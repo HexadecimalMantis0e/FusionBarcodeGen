@@ -36,16 +36,16 @@ class FusionBarcodeGen:
             input = int(self.numInput.get())
             if ( 0 <= input <= 255 ):
                 binaryText = format(input, "08b")[::-1]
-                j = 16
+                offset = 16
 
-                for i in range(0, len(binaryText)):
-                    if binaryText[i] == '0':
-                        self.barcode.create_line(j + 1, 32, j + 1, 0, width = 2, fill = "black")
-                        self.barcode.create_line(j + 3, 32, j + 3, 0, width = 2, fill = "white")
-                    elif binaryText[i] == '1':
-                        self.barcode.create_line(j + 1, 32, j + 1, 0, width = 2, fill = "white")
-                        self.barcode.create_line(j + 3, 32, j + 3, 0, width = 2, fill = "black")
-                    j += 4
+                for binaryBit in binaryText:
+                    if binaryBit == '0':
+                        self.barcode.create_line(offset + 1, 32, offset + 1, 0, width = 2, fill = "black")
+                        self.barcode.create_line(offset + 3, 32, offset + 3, 0, width = 2, fill = "white")
+                    elif binaryBit == '1':
+                        self.barcode.create_line(offset + 1, 32, offset + 1, 0, width = 2, fill = "white")
+                        self.barcode.create_line(offset + 3, 32, offset + 3, 0, width = 2, fill = "black")
+                    offset += 4
             else:
                 msgBox = messagebox.showerror("Error", "Input is not in [0, 255]!")
         except:
